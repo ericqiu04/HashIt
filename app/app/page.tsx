@@ -1,6 +1,6 @@
-import AuthButton from '../components/AuthButton'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import AuthButton from '../components/auth-button'
+import Header from '@/components/app-header'
+import Footer from '@/components/app-footer'
 
 export default async function Index() {
 

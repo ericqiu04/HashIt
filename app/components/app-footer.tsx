@@ -4,7 +4,7 @@ export default function Footer() {
             <div className="grid sm:grid-cols-2">
                 <section className="flex p-24">
                     <div className="text-center sm:text-left">
-                        <h1 className="text-white text-4xl">Hashi.</h1>
+                        <h1 className="text-white text-4xl">HashIt.</h1>
                         <h2 className="text-neutral-400">Supercharge your social presence.</h2>
                     </div>
                 </section>

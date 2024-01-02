@@ -7,7 +7,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Hashi',
+  title: 'HashIt',
   description: 'Supercharge your social presence.',
 }
 
