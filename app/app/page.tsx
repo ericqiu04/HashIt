@@ -1,6 +1,7 @@
 import AuthButton from '../components/AuthButton'
 import { createClient } from '@/utils/supabase/server'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { cookies } from 'next/headers'
 
 export default async function Index() {
@@ -32,6 +33,8 @@ export default async function Index() {
         <main className="flex-1 flex flex-col">          
         </main>
       </div>
+      
+      <Footer />
     </div>
   )
 }
