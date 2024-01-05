@@ -8,6 +8,7 @@ Dockerfile
 .DockerIgnore
 
 # Local PyTorch Models
+*.pt
 *.pth
 
 # Byte-compiled / optimized / DLL files
