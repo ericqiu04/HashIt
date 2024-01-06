@@ -7,10 +7,10 @@ from rest_framework.decorators import api_view
 def root(request):
     return Response()
 
-class ImageHashtagView(APIView):
-    def post(self, request, *args, **kwargs):
-        data = request.data
 
-        return Response({
-            "message": "hi"
-        })
+@api_view(['POST'])
+def image_hashtag(request):
+    data = request.data
+    return Response({
+        "message": data
+    })

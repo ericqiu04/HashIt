@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Data
 
+# TODO define serializers, @ericqiu04, @danmxli.
+
 
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
