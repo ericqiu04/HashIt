@@ -1,7 +1,13 @@
 from rest_framework import serializers
 from .models import Data
 
-class DataSerializer(serializers.ModelSerializer):
+
+class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Data
-        fields=('first_name', 'instagram_description')
+        model = Data
+        fields = ('first_name', 'instagram_username')
+
+
+class HashtagDataSerializer(serializers.Serializer):
+    instagram_username = serializers.CharField(max_length=100)
+    image_url = serializers.CharField(max_length=100)
