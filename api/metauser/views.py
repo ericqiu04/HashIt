@@ -25,7 +25,10 @@ def image_hashtag(request):
     instagram_username = serializer.validated_data['instagram_username']
     image_url = serializer.validated_data['image_url']
 
+    image_recognizer = ImageRecognizer()
+    
 
     return Response({
-        "message": "successfully called"
+        "message": "successfully called",
+        "hashtags": ""
     })

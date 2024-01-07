@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY configuration
 load_dotenv('.env.local')
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = str(os.getenv('DJANGO_SECRET_KEY'))
 
 # Set DEBUG to False during dev
 DEBUG = True

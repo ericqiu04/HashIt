@@ -1,5 +1,5 @@
 from imageai.Classification import ImageClassification
-
+from typing import List
 
 class ImageRecognizer:
 
@@ -8,9 +8,17 @@ class ImageRecognizer:
         i.setModelTypeAsMobileNetV2()
 
         # TODO deploy this model
-        i.setModelPath('./pytorch-models/mobilenet_v2-b0353104.pth')
+        i.setModelPath('.././static/mobilenet_v2-b0353104.pth')
         i.loadModel()
         self.prediction = i
 
-    def recognize_image(self, image_url):
+    def generate_hashtags(self, image_url) -> List:
         """TODO"""
+        predictions, probabilities = self.prediction.classifyImage(
+            str(image_url), result_count=10)
+
+        hashtags = [{"hashtag": each_prediction, "priority": each_probability}
+                    for each_prediction, each_probability in zip(predictions, probabilities)]
+
+        return hashtags
+    
