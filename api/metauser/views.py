@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 # serializers for request body validation
-from metauser.serializer import HashtagDataSerializer, UserDataSerializer
+from metauser.serializer import HashtagDataSerializer
 
 # TODO helper classes
 # from metauser.entity_recognition.image_recognizer import ImageRecognizer
