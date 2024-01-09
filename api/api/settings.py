@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os
 from dotenv import load_dotenv
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECRET_KEY configuration
-load_dotenv('.env.local')
-SECRET_KEY = str(os.getenv('DJANGO_SECRET_KEY'))
+load_dotenv()
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # Set DEBUG to False during dev
 DEBUG = True

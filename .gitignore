@@ -3,6 +3,7 @@ venv
 .venv
 .ipynb-venv
 .env*.local
+*.env
 
 # temp directories
 temp-files
