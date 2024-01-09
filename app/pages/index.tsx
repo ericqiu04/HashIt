@@ -1,11 +1,15 @@
-import AuthButton from '../components/auth-button'
+import Image from 'next/image'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+import AuthButton from '@/components/auth-button'
 import Header from '@/components/app-header'
 import Footer from '@/components/app-footer'
 
-export default async function Index() {
-
+export default function Home() {
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+    <main className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <AuthButton />
@@ -19,6 +23,6 @@ export default async function Index() {
       </div>
 
       <Footer />
-    </div>
+    </main>
   )
 }

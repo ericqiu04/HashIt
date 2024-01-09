@@ -1,8 +1,12 @@
-export default async function AuthButton() {
+const AuthButton = () => {
 
   return (
     <div>
-      Login
+      <button className="p-3 pl-9 pr-9 border rounded hover:border-fuchsia-600">
+        Login
+      </button>
     </div>
   )
 }
+
+export default AuthButton
