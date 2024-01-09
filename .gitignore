@@ -4,6 +4,9 @@ venv
 .ipynb-venv
 .env*.local
 
+# temp directories
+temp-files
+
 # Docker
 Dockerfile
 .DockerIgnore
