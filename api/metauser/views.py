@@ -7,7 +7,8 @@ from metauser.serializer import HashtagDataSerializer
 
 # TODO helper classes
 # from metauser.entity_recognition.image_recognizer import ImageRecognizer
-from metauser.supabase.profiles import Profiles
+from metauser.supabase.users import Users
+users = Users()
 
 
 @api_view(['GET', 'POST'])
@@ -17,15 +18,15 @@ def root(request):
 
 @api_view(['POST'])
 def image_hashtag(request):
-    serializer = HashtagDataSerializer(data=request.data)
+    # serializer = HashtagDataSerializer(data=request.data)
 
-    if not serializer.is_valid():
-        return Response({
-            "message": "invalid request data"
-        })
+    # if not serializer.is_valid():
+    #     return Response({
+    #         "message": "invalid request data"
+    #     })
 
-    instagram_username = serializer.validated_data['instagram_username']
-    image_url = serializer.validated_data['image_url']
+    # instagram_username = serializer.validated_data['instagram_username']
+    # image_url = serializer.validated_data['image_url']
 
     # TODO
     # image_recognizer = ImageRecognizer()
@@ -37,9 +38,46 @@ def image_hashtag(request):
 
 
 @api_view(['POST'])
-def manage_user(request):
-    ...
-    profiles = Profiles()
+def signup(request):
+
+    if not users.signup():
+        return Response({
+            "message": "signup unsuccessful"
+        })
+
     return Response({
-        "message": "successfully called"
+        "message": "signup successful"
+    })
+
+
+@api_view(['POST'])
+def signin(request):
+    """
+    sign in with password, oauth, otp
+    # TODO return access token
+    """
+
+    if not users.signin():
+        return Response({
+            "message": "signin unsuccessful"
+        })
+
+    return Response({
+        "message": "signin successful"
+    })
+
+
+@api_view(['POST'])
+def delete_account(request):
+    """"
+    delete this user account
+    """
+
+    if not users.delete_account():
+        return Response({
+            "message": "account deletion unsuccessful"
+        })
+
+    return Response({
+        "message": "account deletion successful"
     })
