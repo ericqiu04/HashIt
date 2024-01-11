@@ -1,6 +1,7 @@
 from imageai.Classification import ImageClassification
 from typing import List
 
+
 class ImageRecognizer:
 
     def __init__(self) -> None:
@@ -8,7 +9,8 @@ class ImageRecognizer:
         i.setModelTypeAsMobileNetV2()
 
         # TODO deploy this model
-        i.setModelPath('.././static/mobilenet_v2-b0353104.pth')
+        i.setModelPath(
+            'https://elasticbeanstalk-us-east-1-784748705063.s3.amazonaws.com/resnet50-19c8e357.pth')
         i.loadModel()
         self.prediction = i
 
@@ -21,4 +23,3 @@ class ImageRecognizer:
                     for each_prediction, each_probability in zip(predictions, probabilities)]
 
         return hashtags
-    

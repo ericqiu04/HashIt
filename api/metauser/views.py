@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from metauser.serializer import HashtagDataSerializer
 
 # TODO helper classes
-# from metauser.entity_recognition.image_recognizer import ImageRecognizer
+from metauser.entity_recognition.image_recognizer import ImageRecognizer
 from metauser.supabase.users import Users
 users = Users()
 
@@ -29,7 +29,7 @@ def image_hashtag(request):
     # image_url = serializer.validated_data['image_url']
 
     # TODO
-    # image_recognizer = ImageRecognizer()
+    image_recognizer = ImageRecognizer()
 
     return Response({
         "message": "successfully called",
