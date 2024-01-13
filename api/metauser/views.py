@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 # serializers for request body validation
-from metauser.serializer import HashtagDataSerializer
+from metauser.serializer import UserEmailDataSerializer, HashtagDataSerializer
 
 # TODO helper classes
-from metauser.entity_recognition.image_recognizer import ImageRecognizer
+# from metauser.entity_recognition.image_recognizer import ImageRecognizer
 from metauser.supabase.users import Users
 users = Users()
 
@@ -17,47 +17,39 @@ def root(request):
 
 
 @api_view(['POST'])
-def image_hashtag(request):
-    # serializer = HashtagDataSerializer(data=request.data)
-
-    # if not serializer.is_valid():
-    #     return Response({
-    #         "message": "invalid request data"
-    #     })
-
-    # instagram_username = serializer.validated_data['instagram_username']
-    # image_url = serializer.validated_data['image_url']
-
-    # TODO
-    image_recognizer = ImageRecognizer()
-
-    return Response({
-        "message": "successfully called",
-        "hashtags": ""
-    })
-
-
-@api_view(['POST'])
 def signup(request):
+    serializer = UserEmailDataSerializer(data=request.data)
 
-    if not users.signup():
+    if not serializer.is_valid():
+        return Response({
+            "message": "invalid request data"
+        })
+    email = str(serializer.validated_data['email'])
+    password = str(serializer['password'])
+
+    if not users.signup(email, password):
         return Response({
             "message": "signup unsuccessful"
         })
 
     return Response({
-        "message": "signup successful"
+        "message": "signup successful",
+        "email": email
     })
 
 
 @api_view(['POST'])
 def signin(request):
-    """
-    sign in with password, oauth, otp
-    # TODO return access token
-    """
+    serializer = UserEmailDataSerializer(data=request.data)
 
-    if not users.signin():
+    if not serializer.is_valid():
+        return Response({
+            "message": "invalid request data"
+        })
+    email = str(serializer.validated_data['email'])
+    password = str(serializer['password'])
+
+    if not users.signin(email, password):
         return Response({
             "message": "signin unsuccessful"
         })
@@ -69,15 +61,12 @@ def signin(request):
 
 @api_view(['POST'])
 def delete_account(request):
-    """"
-    delete this user account
-    """
 
-    if not users.delete_account():
-        return Response({
-            "message": "account deletion unsuccessful"
-        })
+    # TODO delete specified account from auth.users
+    # admin level only
+    user_uid = request.data['user_uid']
 
+    users.delete_account(user_uid)
     return Response({
-        "message": "account deletion successful"
+        "message": "TODO account deletion successful",
     })

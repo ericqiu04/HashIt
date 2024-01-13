@@ -1,12 +1,16 @@
 from rest_framework import serializers
 from .models import Data
+from django.core.validators import EmailValidator
 
 # TODO define serializers, @ericqiu04, @danmxli.
 
-class UserDataSerializer(serializers.Serializer):
-    """
-    Data serializer for manage_user request data validation
-    """
+
+class UserEmailDataSerializer(serializers.Serializer):
+    email = serializers.EmailField(
+        min_length=11,
+        max_length=100,
+        validators=[EmailValidator(message='Enter a valid email address with the "@" character.')])
+    password = serializers.CharField(min_length=6)
 
 
 class HashtagDataSerializer(serializers.Serializer):
