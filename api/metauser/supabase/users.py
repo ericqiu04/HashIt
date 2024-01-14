@@ -4,6 +4,7 @@ from supabase import create_client, Client
 from typing import List, Dict
 from gotrue.errors import AuthApiError
 import logging
+import json
 
 
 load_dotenv()
@@ -13,20 +14,29 @@ key: str = config('SUPABASE_KEY')
 
 class Users:
 
-    def __init__(self) -> None:
+    def __init__(self) -> Dict:
         self.supabase: Client = create_client(url, key)
         pass
 
-    def signup(self, email, password) -> bool:
+    def signup(self, email, password) -> Dict:
         try:
             user = self.supabase.auth.sign_up(
                 {"email": email, "password": password})
 
         # TODO if existing user https://github.com/orgs/supabase/discussions/1282
         except:
-            return False
+            return {}
 
-        return True
+        # TODO serialize this data
+        user_data = {
+            'user_id': user.user.id,
+            'email': user.user.email,
+            'access_token': user.session.access_token,
+            'refresh_token': user.session.refresh_token,
+            'expires_in': user.session.expires_in,
+            'expires_at': user.session.expires_at,
+        }
+        return user_data
 
     def signin(self, email, password) -> bool:
         try:
@@ -45,11 +55,11 @@ class Users:
         response = self.supabase.rpc('all_users', {}).execute()
         return response['data']
 
-
     def delete_account(self, user_uid) -> bool:
 
         # TODO https://github.com/orgs/supabase/discussions/250
 
-        response = self.supabase.rpc('delete_user_by_id', {'user_id': user_uid}).execute()
+        response = self.supabase.rpc(
+            'delete_user_by_id', {'user_id': user_uid}).execute()
         print(response)
         return True

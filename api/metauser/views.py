@@ -27,14 +27,16 @@ def signup(request):
     email = str(serializer.validated_data['email'])
     password = str(serializer['password'])
 
-    if not users.signup(email, password):
+    signup_response = users.signup(email, password)
+    if not signup_response:
         return Response({
             "message": "signup unsuccessful"
         })
+        
 
     return Response({
         "message": "signup successful",
-        "email": email
+        "response": signup_response
     })
 
 
