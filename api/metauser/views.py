@@ -32,7 +32,6 @@ def signup(request):
         return Response({
             "message": "signup unsuccessful"
         })
-        
 
     return Response({
         "message": "signup successful",
@@ -51,13 +50,15 @@ def signin(request):
     email = str(serializer.validated_data['email'])
     password = str(serializer['password'])
 
-    if not users.signin(email, password):
+    signin_response = users.signin(email, password)
+    if not signin_response:
         return Response({
             "message": "signin unsuccessful"
         })
 
     return Response({
-        "message": "signin successful"
+        "message": "signin successful",
+        "response": signin_response
     })
 
 

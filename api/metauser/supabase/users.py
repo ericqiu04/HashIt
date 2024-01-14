@@ -29,8 +29,8 @@ class Users:
 
         # TODO serialize this data
         user_data = {
-            'user_id': user.user.id,
-            'email': user.user.email,
+            # 'user_id': user.user.id,
+            # 'email': user.user.email,
             'access_token': user.session.access_token,
             'refresh_token': user.session.refresh_token,
             'expires_in': user.session.expires_in,
@@ -38,17 +38,25 @@ class Users:
         }
         return user_data
 
-    def signin(self, email, password) -> bool:
+    def signin(self, email, password):
         try:
             user = self.supabase.auth.sign_in_with_password(
                 {"email": email, "password": password})
 
         except AuthApiError as e:
             logging.error(f"Authentication failed: {str(e)}")
-            return False
+            return {}
 
-        logging.info(user)
-        return True
+        # TODO serialize this data
+        user_data = {
+            # 'user_id': user.user.id,
+            # 'email': user.user.email,
+            'access_token': user.session.access_token,
+            'refresh_token': user.session.refresh_token,
+            'expires_in': user.session.expires_in,
+            'expires_at': user.session.expires_at,
+        }
+        return user_data
 
     def all_users(self) -> List:
         # testing connectivity purposes only
