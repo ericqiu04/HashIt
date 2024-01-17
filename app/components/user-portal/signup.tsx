@@ -2,6 +2,8 @@
 import { useDispatch } from "react-redux";
 import { login } from "@/store/slice/authSlice"
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
 
@@ -15,7 +17,10 @@ const SignUp = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (password !== confirmPassword) {
-            console.info('mismatch pwd')
+            toast.error("Mismatching passwords.", {
+                position: "bottom-left",
+                autoClose: 1500,
+            })
             return
         }
         console.log('TODO signup dispatch')
@@ -50,6 +55,9 @@ const SignUp = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
                     />
                 </div>
+
+                <ToastContainer />
+
                 <button type="submit" className="p-3 mt-6 bg-fuchsia-600 hover:bg-fuchsia-900 rounded text-white">Sign up</button>
                 <div className="mt-6 pt-3 border-t flex items-center justify-center">
                     <span className="text-sm">Existing account? <a href="/signin" className="underline text-fuchsia-900">Sign in</a></span>
