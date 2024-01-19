@@ -4,6 +4,7 @@ import { login } from "@/store/slice/authSlice"
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
 
@@ -11,6 +12,7 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [token, setToken] = useState('')
+    const router = useRouter()
 
     const dispatch = useDispatch()
 
@@ -25,6 +27,7 @@ const SignUp = () => {
         }
         console.log('TODO signup dispatch')
         // dispatch signup
+        router.push('/dashboard')
     }
 
     return (
