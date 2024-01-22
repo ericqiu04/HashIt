@@ -13,7 +13,9 @@ users = Users()
 
 @api_view(['GET', 'POST'])
 def root(request):
-    return Response()
+    return Response({
+        "message": "metauser route reached"
+    })
 
 
 @api_view(['POST'])

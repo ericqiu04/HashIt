@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
-import { signIn } from "@/utils/metauser";
+import { signIn, dummy } from "@/utils/metauser";
 
 const SignIn = () => {
 
@@ -24,7 +24,7 @@ const SignIn = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const response = await signIn();
+            const response = await dummy();
             console.log('Sign-in successful:', response);
         } catch (error) {
             console.error('Error signing in:', error);
