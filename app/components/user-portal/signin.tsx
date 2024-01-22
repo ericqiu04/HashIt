@@ -13,7 +13,7 @@ const SignIn = () => {
     const [password, setPassword] = useState('')
     const [token, setToken] = useState('')
     const router = useRouter()
-    
+
     // send authentication to backend and fetch token
     useEffect(() => {
 
@@ -24,17 +24,21 @@ const SignIn = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const response = await dummy();
-            console.log('Sign-in successful:', response);
+            const response = await signIn(email, password);
+
+            if (response.message === 'signin unsuccessful') {
+                toast.error("Account not found.", {
+                    position: "bottom-left",
+                    autoClose: 1500,
+                })
+                return
+            }
+            dispatch(login({ user: email, isLoggedIn: true, token: token }));
+
         } catch (error) {
-            console.error('Error signing in:', error);
+            console.error(error);
+            return
         }
-        dispatch(login({ user: email, isLoggedIn: true, token: token }));
-        toast.error("Account not found.", {
-            position: "bottom-left",
-            autoClose: 1500,
-        })
-        return
     }
 
     return (
