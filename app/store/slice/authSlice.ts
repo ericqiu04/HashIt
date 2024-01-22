@@ -21,8 +21,16 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
 
+    // TODO define reducer logic
     reducers: {
         login: (state, action: PayloadAction<{ user: User; isLoggedIn: boolean; token: string }>) => {
+            const { user, isLoggedIn, token } = action.payload;
+            state.user = user;
+            state.isLoggedIn = isLoggedIn;
+            state.token = token;
+        },
+
+        signup: (state, action: PayloadAction<{ user: User; isLoggedIn: boolean; token: string }>) => {
             const { user, isLoggedIn, token } = action.payload;
             state.user = user;
             state.isLoggedIn = isLoggedIn;
@@ -37,6 +45,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, signup, logout } = authSlice.actions;
 
 export default authSlice.reducer;

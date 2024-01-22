@@ -1,6 +1,6 @@
 'use client'
 import { useDispatch } from "react-redux";
-import { login } from "@/store/slice/authSlice"
+import { signup } from "@/store/slice/authSlice"
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,6 +27,7 @@ const SignUp = () => {
         }
         console.log('TODO signup dispatch')
         // dispatch signup
+        dispatch(signup({ user: email, isLoggedIn: true, token: token }));
         router.push('/dashboard')
     }
 
