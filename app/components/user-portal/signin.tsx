@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
+import { signIn } from "@/utils/metauser";
 
 const SignIn = () => {
 
@@ -22,6 +23,12 @@ const SignIn = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        try {
+            const response = await signIn();
+            console.log('Sign-in successful:', response);
+        } catch (error) {
+            console.error('Error signing in:', error);
+        }
         dispatch(login({ user: email, isLoggedIn: true, token: token }));
         toast.error("Account not found.", {
             position: "bottom-left",
