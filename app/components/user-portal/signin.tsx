@@ -27,7 +27,7 @@ const SignIn = () => {
             const response = await signIn(email, password);
 
             if (response.message === 'signin unsuccessful') {
-                toast.error("Account not found.", {
+                toast.error("Invalid account email and/or password.", {
                     position: "bottom-left",
                     autoClose: 1500,
                 })

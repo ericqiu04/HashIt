@@ -28,7 +28,7 @@ export async function signIn(email: string, password: string): Promise<AuthRespo
     }
 }
 
-export async function signup(email: string, password: string): Promise<AuthResponse> {
+export async function register(email: string, password: string): Promise<AuthResponse> {
     try {
         const response = await fetch('http://localhost:5001/metauser/signup/', {
             method: 'POST',

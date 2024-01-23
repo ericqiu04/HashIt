@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
+import { register } from "@/utils/metauser";
 
 const SignUp = () => {
 
@@ -18,17 +19,39 @@ const SignUp = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (password !== confirmPassword) {
-            toast.error("Mismatching passwords.", {
-                position: "bottom-left",
-                autoClose: 1500,
-            })
+        try {
+            if (password !== confirmPassword) {
+                toast.error("Mismatching passwords.", {
+                    position: "bottom-left",
+                    autoClose: 1500,
+                })
+                return
+            }
+
+            const response = await register(email, password)
+
+            if (response.message === 'signin unsuccessful') {
+                toast.error("Error registering user. Try with a different combination.", {
+                    position: "bottom-left",
+                    autoClose: 1500,
+                })
+                return
+            }
+            if (response.message === 'invalid request data') {
+                toast.error("Invalid user password.", {
+                    position: "bottom-left",
+                    autoClose: 1500,
+                })
+                return
+            }
+            
+            dispatch(signup({ user: email, isLoggedIn: true, token: token }));
+            router.push('/dashboard')
+        }
+        catch (error) {
+            console.error(error)
             return
         }
-        console.log('TODO signup dispatch')
-        // dispatch signup
-        dispatch(signup({ user: email, isLoggedIn: true, token: token }));
-        router.push('/dashboard')
     }
 
     return (
