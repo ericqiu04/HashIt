@@ -33,7 +33,15 @@ const SignIn = () => {
                 })
                 return
             }
+            if (response.message === 'invalid request data') {
+                toast.error("Invalid user password.", {
+                    position: "bottom-left",
+                    autoClose: 1500,
+                })
+                return
+            }
             dispatch(login({ user: email, isLoggedIn: true, token: token }));
+            router.push('/dashboard')
 
         } catch (error) {
             console.error(error);
