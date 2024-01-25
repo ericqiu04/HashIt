@@ -14,7 +14,7 @@ key: str = config('SUPABASE_KEY')
 
 class Users:
 
-    def __init__(self) -> Dict:
+    def __init__(self):
         self.supabase: Client = create_client(url, key)
         pass
 
@@ -23,8 +23,9 @@ class Users:
             user = self.supabase.auth.sign_up(
                 {"email": email, "password": password})
 
-        # TODO if existing user https://github.com/orgs/supabase/discussions/1282
-        except:
+        except AuthApiError as e:
+            # Authentication failed: User already registered
+            logging.error(f"Authentication failed: {str(e)}")
             return {}
 
         # TODO serialize this data
