@@ -24,11 +24,13 @@ class Users:
                 {"email": email, "password": password})
 
         except AuthApiError as e:
-            # Authentication failed: User already registered
+            # User already registered
             logging.error(f"Authentication failed: {str(e)}")
-            return {}
+            return {
+                "success": False,
+                "response": str(e)
+            }
 
-        # TODO serialize this data
         user_data = {
             # 'user_id': user.user.id,
             # 'email': user.user.email,
@@ -37,7 +39,10 @@ class Users:
             'expires_in': user.session.expires_in,
             'expires_at': user.session.expires_at,
         }
-        return user_data
+        return {
+            "success": True,
+            "response": user_data
+        }
 
     def signin(self, email, password):
         try:
@@ -45,10 +50,13 @@ class Users:
                 {"email": email, "password": password})
 
         except AuthApiError as e:
+            # Invalid login credentials
             logging.error(f"Authentication failed: {str(e)}")
-            return {}
+            return {
+                "success": False,
+                "response": str(e)
+            }
 
-        # TODO serialize this data
         user_data = {
             # 'user_id': user.user.id,
             # 'email': user.user.email,
@@ -57,7 +65,10 @@ class Users:
             'expires_in': user.session.expires_in,
             'expires_at': user.session.expires_at,
         }
-        return user_data
+        return {
+            "success": True,
+            "response": user_data
+        }
 
     def all_users(self) -> List:
         # testing connectivity purposes only

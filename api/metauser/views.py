@@ -24,21 +24,14 @@ def signup(request):
 
     if not serializer.is_valid():
         return Response({
-            "message": "invalid request data"
+            "success" : False,
+            "response": "Invalid request data"
         })
     email = str(serializer.validated_data['email'])
     password = str(serializer['password'])
 
     signup_response = users.signup(email, password)
-    if not signup_response:
-        return Response({
-            "message": "signup unsuccessful"
-        })
-
-    return Response({
-        "message": "signup successful",
-        "response": signup_response
-    })
+    return Response(signup_response)
 
 
 @api_view(['POST'])
@@ -47,21 +40,14 @@ def signin(request):
 
     if not serializer.is_valid():
         return Response({
-            "message": "invalid request data"
+            "success": False,
+            "response": "Invalid request data"
         })
     email = str(serializer.validated_data['email'])
     password = str(serializer['password'])
 
     signin_response = users.signin(email, password)
-    if not signin_response:
-        return Response({
-            "message": "signin unsuccessful"
-        })
-
-    return Response({
-        "message": "signin successful",
-        "response": signin_response
-    })
+    return Response(signin_response)
 
 
 @api_view(['POST'])

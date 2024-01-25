@@ -30,21 +30,14 @@ const SignUp = () => {
 
             const response = await register(email, password)
 
-            if (response.message === 'signin unsuccessful') {
-                toast.error("Error registering user. Try with a different combination.", {
+            if (!response.success && typeof response.response == 'string') {
+                toast.error(response.response, {
                     position: "bottom-left",
                     autoClose: 1500,
                 })
                 return
             }
-            if (response.message === 'invalid request data') {
-                toast.error("Invalid user password.", {
-                    position: "bottom-left",
-                    autoClose: 1500,
-                })
-                return
-            }
-            
+
             dispatch(signup({ user: email, isLoggedIn: true, token: token }));
             router.push('/dashboard')
         }

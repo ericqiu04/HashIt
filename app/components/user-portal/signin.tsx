@@ -26,20 +26,14 @@ const SignIn = () => {
         try {
             const response = await signIn(email, password);
 
-            if (response.message === 'signin unsuccessful') {
-                toast.error("Invalid account email and/or password.", {
+            if (!response.success && typeof response.response == 'string') {
+                toast.error(response.response, {
                     position: "bottom-left",
                     autoClose: 1500,
                 })
                 return
             }
-            if (response.message === 'invalid request data') {
-                toast.error("Invalid user password.", {
-                    position: "bottom-left",
-                    autoClose: 1500,
-                })
-                return
-            }
+            
             dispatch(login({ user: email, isLoggedIn: true, token: token }));
             router.push('/dashboard')
 

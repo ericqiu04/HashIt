@@ -1,11 +1,11 @@
 type AuthResponse = {
-    message: string;
+    success: boolean;
     response: {
         access_token: string;
         refresh_token: string;
         expires_in: number;
         expires_at: number;
-    } | null;
+    } | string;
 };
 
 export async function signIn(email: string, password: string): Promise<AuthResponse> {
