@@ -6,11 +6,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import { signIn, dummy } from "@/utils/metauser";
+import { isValid } from "@/utils/password-validation";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const SignIn = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [token, setToken] = useState('')
     const router = useRouter()
 
@@ -21,23 +26,41 @@ const SignIn = () => {
 
     const dispatch = useDispatch()
 
+    const handleClickTogglePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setShowPassword(!showPassword);
+    };
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        if (!isValid(password)) {
+            toast.error('Invalid password', {
+                position: "bottom-left",
+                autoClose: 1500,
+            })
+            return
+        }
+
         try {
+            setIsLoading(true)
             const response = await signIn(email, password);
 
             if (!response.success && typeof response.response == 'string') {
+                setIsLoading(false)
                 toast.error(response.response, {
                     position: "bottom-left",
                     autoClose: 1500,
                 })
                 return
             }
-            
+
             dispatch(login({ user: email, isLoggedIn: true, token: token }));
+            setIsLoading(false)
             router.push('/dashboard')
 
         } catch (error) {
+            setIsLoading(false)
             console.error(error);
             return
         }
@@ -59,14 +82,30 @@ const SignIn = () => {
                     <div className="mb-1 block">
                         <label htmlFor="password">Password</label>
                     </div>
-                    <input id="password" type="password" className="bg-neutral-50 focus:outline-none focus:border-fuchsia-600 p-3 rounded border w-full" required
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                    />
+                    <div className="relative">
+                        <input
+                            id="password"
+                            type={showPassword ? 'text' : 'password'}
+                            className="bg-neutral-50 focus:outline-none focus:border-fuchsia-600 p-3 rounded border w-full"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button
+                            className="absolute inset-y-0 right-0 flex items-center px-4 text-neutral-400"
+                            onClick={handleClickTogglePassword}
+                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                            {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
+                        </button>
+                    </div>
                 </div>
 
                 <ToastContainer />
 
-                <button type="submit" className="p-3 mt-6 bg-fuchsia-600 hover:bg-fuchsia-900 rounded text-white">Sign in</button>
+                <button type="submit" className="p-3 mt-6 bg-fuchsia-600 hover:bg-fuchsia-900 rounded text-white">
+                    {isLoading ? <div className="flex items-center justify-center gap-3"><AiOutlineLoading3Quarters className="animate-spin" />Loading</div> : <div>Submit</div>}
+                </button>
                 <div className="mt-6 pt-3 border-t flex items-center justify-center">
                     <span className="text-sm">Don&apos;t have an account? <a href="/signup" className="underline text-fuchsia-900">Sign up</a></span>
                 </div>
