@@ -73,9 +73,6 @@ supabase==2.3.1
 supafunc==0.3.3
 sympy==1.12
 tomli==2.0.1
-torch==2.3.0.dev20240121+cu118
-torchaudio==2.2.0.dev20240121+cu118
-torchvision==0.18.0.dev20240121+cu118
 tqdm==4.64.1
 typing_extensions==4.9.0
 urllib3==2.0.7
